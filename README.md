@@ -17,3 +17,25 @@ A lot of work of object detection methods are focusing on how to generate boundi
 
 Basic
 
+### Run BBQ
+
+To run BBQ you need to type this two commands in your terminal,
+
+```bash
+export FLASK_APP=BBQDemo.py
+```
+
+Then you will this hints below
+
+```bash
+ * Serving Flask app "BBQDemo"
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+```
+
+you can try 
+
+```bash
+flask run
+```
+
