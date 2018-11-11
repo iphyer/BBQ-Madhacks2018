@@ -12,7 +12,7 @@
     {% if post.loc_error|length != 0 %}
     <h3>Location Error</h3>
 
-    <p>{{post.path}}</p>
+    <!--<p>{{post.path}}</p>-->
     <img src="{{url_for('static', filename=post.path[9:] + 'loc.png')}}" alt="1" usemap="#errormap1">
 
     <map name="errormap1">
@@ -28,7 +28,7 @@
     {% if post.cls_error|length != 0 %}
     <h3>Classification Error</h3>
 
-    <h3>{{post.path}}</h3>
+    <!--<h3>{{post.path}}</h3>-->
     <img src="{{url_for('static', filename=post.path[9:] + 'cls.png')}}" alt="2" usemap="#errormap2">
 
     <map name="errormap2">
