@@ -118,7 +118,7 @@ Then the website will bring you to the more detailed information page as shown b
 
 ## How we built it
 
-
+We use `Python 3` with `Flask` as our backend engine to build the website and `Bootstrap` as our frontend framework for UI.
 
 ## Challenges we ran into
 
