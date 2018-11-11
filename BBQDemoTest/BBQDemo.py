@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
 import numpy as np
-from skimage import io
+# from skimage import io
 from util import checker, plotHelper
 import uuid
 from PIL import Image
@@ -45,7 +45,9 @@ def zoomin():
     # print(x2)
     # print(y1)
     # print(y2)
-    # cropImg(path, )
+
+    print("AAAAAAAAAAAAAAAAAA")
+    plotHelper.cropImg(info_list, path)
     post = {
         'info_list' : info_list,
         'path' : path,
@@ -54,7 +56,7 @@ def zoomin():
 
 
     print(path)
-    return render_template('zoomin.html')
+    return render_template('zoomin.html', posts = [post])
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
@@ -76,7 +78,7 @@ def upload_file():
 
 
 def processing(files, dirPath):
-    img = io.imread(os.path.join(dirPath, "image"))
+    # img = io.imread(os.path.join(dirPath, "image"))
     predArr = np.loadtxt(os.path.join(dirPath, "pred"), delimiter=',')
     gtArr = np.loadtxt(os.path.join(dirPath, "gt"), delimiter=',')
     bbox_label_names = ('111', 'dot', '100')

@@ -6,10 +6,32 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as ticker
 
+matplotlib.use('Agg')
+
 dpi = 150
 
+def cropImg(info_loc, dirpath):
+
+
+    # truth = np.loadtxt(filename, delimiter=',' )
+    fig = plt.figure()
+    ax = fig.add_subplot(111, aspect='equal')
+    if len(info_loc) == 2:
+        im = Image.open(os.path.join(dirpath, "loc.png")).convert('L')
+
+    else:
+        im = Image.open(os.path.join(dirpath, "cls.png")).convert('L')
+
+
+    x1 = info_loc[0][1]
+    y1 = info_loc[0][2]
+    x2 = info_loc[0][3]
+    y2 = info_loc[0][4]
+    im = im.crop((x1, y1, x2, y2))
+    im.save(os.path.join(dirpath, 'crop.png'))
+
+
 def plotloc(loc_list, dirPath):
-    matplotlib.use('Agg')
 
 
     # truth = np.loadtxt(filename, delimiter=',' )
@@ -57,7 +79,6 @@ def plotloc(loc_list, dirPath):
 
 
 def plotcls(cls_list, dirPath):
-    matplotlib.use('Agg')
 
 
     # truth = np.loadtxt(filename, delimiter=',' )
