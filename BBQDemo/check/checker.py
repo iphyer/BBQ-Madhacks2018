@@ -80,12 +80,19 @@ def evaluate_twoBBox_by_iou_kinds(gtBBoxArr, predBBoxArr, bbox_label_names=('0')
         threshold_IoU: the threshold value used two decide whether two bboxes overlapped
 
     Returns:
-        correct : the number of correct predictions
-        cls_error : the number of classification errors
-        loc_error : the number of location errors
-        confMatrix : the confusion matrix of classification errors
-        area_loc_error_list : the pixel area of location error bbox
-        gtNumDefects : the number of ground truth bbox for each type defects
+        correct: the number of correct predictions
+        cls_error: the number of classification errors
+        loc_error: the number of location errors
+        confMatrix: the confusion matrix of classification errors
+        area_loc_error_list: the pixel area of location error bbox
+        gtNumDefects: the number of ground truth bbox for each type defects
+        cls_error_list: the list of classification error list
+                        each element is a pair of (pred_record, pred_lineNumber, gt_record,gt_lineNumber)
+                        pred_record contains 6 items [label,x1,y1,x2,y2]
+                        gt_record contains 6 items [label,x1,y1,x2,y2,lineNumber]
+        loc_error_list: if it is a list of (pred_record, pred_lineNumber)
+                        each pred_record contains 6 items [label,x1,y1,x2,y2]
+
     """
 
     correct = 0
@@ -94,6 +101,8 @@ def evaluate_twoBBox_by_iou_kinds(gtBBoxArr, predBBoxArr, bbox_label_names=('0')
     gtNumDefects = np.zeros(shape=(1, len(bbox_label_names)))
     confMatrix = np.zeros(shape=(len(bbox_label_names), len(bbox_label_names)))
     area_loc_error_list = list()
+    cls_error_list = list()
+    loc_error_list = list()
 
     # get ground truth class numbers
     for k in range(0, len(gtBBoxArr)):
@@ -116,10 +125,21 @@ def evaluate_twoBBox_by_iou_kinds(gtBBoxArr, predBBoxArr, bbox_label_names=('0')
                 correct += 1
             else:
                 cls_error += 1
+                tmp = list()
+                tmp.append(predBBoxArr[i].tolist())
+                tmp.append(i+1)
+                tmp.append(gtBBoxArr[maxpos].tolist())
+                tmp.append(maxpos+1)
+                cls_error_list.append(tmp)
+
         else:  # no IoU > threshold_IoU found
             loc_error += 1
-            area_loc_error_list.append((predBBoxArr[i][0], bbox_area(predBBoxArr[i][1:])))
-    return correct, cls_error, loc_error, confMatrix, area_loc_error_list, gtNumDefects
+            tmp = list()
+            tmp.append(predBBoxArr[i].tolist())
+            tmp.append(i + 1)
+            loc_error_list.append(tmp)
+            #area_loc_error_list.append((predBBoxArr[i][0], bbox_area(predBBoxArr[i][1:])))
+    return correct, cls_error, loc_error, confMatrix, gtNumDefects,cls_error_list,loc_error_list
 
 if __name__ == '__main__':
     print("Test")
@@ -127,7 +147,7 @@ if __name__ == '__main__':
     gtArr = np.loadtxt(gtPath,delimiter=',')
     img = io.imread(imgPath)
 
-    correct, cls_error, loc_error, confMatrix, area_loc_error_list, gtNumDefects = evaluate_twoBBox_by_iou_kinds(gtArr, predArr, bbox_label_names, threshold_IoU=0.5)
+    correct, cls_error, loc_error, confMatrix, gtNumDefects,cls_error_list,loc_error_list = evaluate_twoBBox_by_iou_kinds(gtArr, predArr, bbox_label_names, threshold_IoU=0.5)
 
     print(correct)
     print(loc_error)
@@ -145,6 +165,9 @@ if __name__ == '__main__':
     print("R : %f" % recall)
     print("F1 : %f" % F1)
     print("============ Performance ==============")
+
+    print(cls_error_list)
+    print(loc_error_list)
 
     # csvFileName = "area.csv" + time.strftime("%Y%m%d_%H%M%S")
     # with open(csvFileName, 'w') as myfile:
