@@ -81,11 +81,40 @@ After all files are selected, you can click the `Submit` to submit all 3 files
 
 Then the website will show all the mismatched predicted bounding boxes and for different types of error, it will display them differently:
 
-### 1.  location error
+![step4](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step4.png)
 
-This means that the object detection model predicts the wrong location of an object. The model thinks there is an object but according to ground truth label, it is background. So we have to check why the model thinks a background area is an object. And because the ground truth dataset may contain error, so it can also be that ground truth labeling misses a potential object. 
+1. location error
+2. classification error
 
-![typical output of a]
+In the above summary figure, the website only plots the wrong predictions and all color bounding box on the web page can be clicked which will bring you to a more detailed information web page.
+
+#### Step 3 : Check location error
+
+Say if we want to check the location as pointed in the following figure, you can directly click it.
+
+![step4loc](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step4loc.jpg)
+
+which will bring you to another web page as shown below,
+
+![step5loc](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step5loc.png)
+
+location error means that the object detection model predicts the wrong location of an object. The model thinks there is an object but according to ground truth label, it is background. So we have to check why the model thinks a background area is an object. And because the ground truth data set may contain error, so it can also be that ground truth labeling misses a potential object. 
+
+With the given information, you can easily identify which type of reason of the error and modify correspondingly.
+
+#### Step 4 : Check classification error
+
+Classification error means the model detects the region of interest but the classifier fails to classify the region of interest into the correct category which means you may need a stronger classifier.
+
+ Say we want to check the classification error that is pointed by the red arrow in the following figure,
+ 
+ ![step4cls](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step4cls.jpg)
+
+You can click either red for prediction bounding box or blue ground truth bounding box.
+
+Then the website will bring you to the more detailed information page as shown below,
+
+ ![step5cls](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step5cls.jpg)
 
 ## How we built it
 
