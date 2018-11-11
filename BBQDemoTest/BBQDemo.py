@@ -6,7 +6,8 @@ import numpy as np
 from skimage import io
 from util import checker, plotHelper
 import uuid
-
+from PIL import Image
+import ast
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -28,6 +29,33 @@ def allowed_file(filename, mode):
 def index():
     return render_template('indexTest.html')
 
+@app.route('/zoomin')
+def zoomin():
+    # type = request.args.get('type', default='', type=str)
+    # x1 = request.args.get('x1', default=0.0, type=float)
+    # y1 = request.args.get('y1', default=0.0, type=float)
+    # x2 = request.args.get('x2', default=0.0, type=float)
+    # y2 = request.args.get('y2', default=0.0, type=float)
+    info = request.args.get('info', default="", type=str)
+    scale = request.args.get('scale', default=0.0, type=float)
+    path = request.args.get('path', default="", type=str)
+    info_list = ast.literal_eval(info)
+
+    # print(x1)
+    # print(x2)
+    # print(y1)
+    # print(y2)
+    # cropImg(path, )
+    post = {
+        'info_list' : info_list,
+        'path' : path,
+        'scale' : scale
+    }
+
+
+    print(path)
+    return render_template('zoomin.html')
+
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -45,7 +73,6 @@ def upload_file():
         files[2].save(os.path.join(dirpath, "pred"))
         posts = processing(files, dirpath)
         return render_template('imagemap.html', posts = [posts])
-        return "123"
 
 
 def processing(files, dirPath):
@@ -67,14 +94,24 @@ def processing(files, dirPath):
     recall = 1.0 * correct / (np.sum(gtNumDefects))
     F1 = 2.0 * recall * precision / (recall + precision)
 
-    plotHelper.plot(loc_error_list, dirPath)
+    plotHelper.plotloc(loc_error_list, dirPath)
+    plotHelper.plotcls(cls_error_list, dirPath)
 
+    imin = Image.open(os.path.join(dirPath, "image"))
+    imout = Image.open(os.path.join(dirPath, "loc.png"))
+    w1, h1 = imin.size
+    w2, h2 = imout.size
+    scale = 1.0 * w2 / w1
+    print(scale)
+    print(len(cls_error_list))
     post = {
         'p' : precision,
         'r' : recall,
         'f1' : F1,
         'loc_error' : loc_error_list,
-        'path' : dirPath
+        'cls_error' : cls_error_list,
+        'path' : dirPath,
+        'scale' : scale
     }
 
 
