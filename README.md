@@ -138,4 +138,4 @@ For future work, we plan to add a model deployment module to BBQ, where users ca
 
 ## Submitted to MadHack 2018
 
-
+![Successful Submission](./Report/success.png)
