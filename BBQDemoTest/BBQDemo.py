@@ -61,6 +61,52 @@ def zoomin():
     print(path)
     return render_template('zoomin.html', posts = [post])
 
+@app.route('/zoominCLS')
+def zoominCLS():
+    # type = request.args.get('type', default='', type=str)
+    # x1 = request.args.get('x1', default=0.0, type=float)
+    # y1 = request.args.get('y1', default=0.0, type=float)
+    # x2 = request.args.get('x2', default=0.0, type=float)
+    # y2 = request.args.get('y2', default=0.0, type=float)
+    predinfo = request.args.get('predinfo', default="", type=str)
+    predline = request.args.get('predline', default="", type=int)
+    gtinfo = request.args.get('gtinfo', default="", type=str)
+    gtline = request.args.get('gtline', default="", type=int)
+    scale = request.args.get('scale', default=0.0, type=float)
+    path = request.args.get('path', default="", type=str)
+    #print("CCC")
+    #print(predinfo)
+    #print(gtinfo)
+    predinfo_list = ast.literal_eval(predinfo)
+    gtinfo_list = ast.literal_eval(gtinfo)
+    #print("BBBBBBB")
+    #print(info_list)
+    #print(scale)
+    #print(path)
+
+    # print(x1)
+    # print(x2)
+    # print(y1)
+    # print(y2)
+
+    print("AAAAAAAAAAAAAAAAAA")
+    predcropName = plotHelper.cropImgCLS(predinfo_list,predline,"pred", path)
+    gtcropName = plotHelper.cropImgCLS(gtinfo_list,gtline,"gt" ,path)
+    wholeName = plotHelper.wholeImgCLS(gtinfo_list,predinfo_list, path)
+    post = {
+        'predinfo_list' : predinfo_list,
+        'gtinfo_list': gtinfo_list,
+        'predline': predline,
+        'gtline': gtline,
+        'path' : path,
+        'scale' : scale,
+        'cropPred' : predcropName,
+        'cropGt': gtcropName,
+        'whole' : wholeName
+    }
+    print(path)
+    return render_template('zoominCLS.html', posts = [post])
+
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -103,11 +149,13 @@ def processing(files, dirPath):
     plotHelper.plotcls(cls_error_list, dirPath)
 
     imin = Image.open(os.path.join(dirPath, "image"))
-    imout = Image.open(os.path.join(dirPath, "loc.png"))
+    imout_loc = Image.open(os.path.join(dirPath, "loc.png"))
+    imout_cls = Image.open(os.path.join(dirPath, "cls.png"))
     w1, h1 = imin.size
-    w2, h2 = imout.size
-    scale = 1.0 * w2 / w1
-    print(scale)
+    w2_loc, h2_loc = imout_loc.size
+    w2_cls, h2_cls = imout_cls.size
+    scale_loc = 1.0 * w2_loc / w1
+    scale_cls = 1.0 * w2_cls / w1
     print(len(cls_error_list))
     post = {
         'p' : precision,
@@ -116,7 +164,8 @@ def processing(files, dirPath):
         'loc_error' : loc_error_list,
         'cls_error' : cls_error_list,
         'path' : dirPath,
-        'scale' : scale
+        'scaleLOC' : scale_loc,
+        'scaleCLS' : scale_cls
     }
 
 

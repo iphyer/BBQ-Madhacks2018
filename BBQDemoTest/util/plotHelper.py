@@ -31,6 +31,25 @@ def cropImg(info_loc, dirpath):
     im.save(os.path.join(dirpath, tmpName))
     return tmpName
 
+def cropImgCLS(info_loc,line,preName, dirpath):
+    # truth = np.loadtxt(filename, delimiter=',' )
+    fig = plt.figure()
+    ax = fig.add_subplot(111, aspect='equal')
+    im = Image.open(os.path.join(dirpath, 'image')).convert('L')
+
+    sz = im.size
+    lossBound = 10
+    x1 = max(info_loc[1] - lossBound, 0)
+    y1 = max(info_loc[2] - lossBound, 0)
+    x2 = min(info_loc[3] + lossBound, sz[0]-1)
+    y2 = min(info_loc[4] + lossBound, sz[1]-1)
+    print((x1, y1, x2, y2))
+    im = im.crop((x1, y1, x2, y2))
+    print(info_loc[1])
+    tmpName = preName+"crop_Line"+str(line)+".png"
+    im.save(os.path.join(dirpath, tmpName))
+    return tmpName
+
 def wholeImg(info_loc, dirpath):
     # truth = np.loadtxt(filename, delimiter=',' )
     fig = plt.figure()
@@ -74,6 +93,63 @@ def wholeImg(info_loc, dirpath):
     fig.savefig(os.path.join(dirpath, tmpName), dpi=dpi, bbox_inches='tight', pad_inches=0)
     return tmpName
 
+def wholeImgCLS(gt_info_cls,pred_info_cls, dirpath):
+    # truth = np.loadtxt(filename, delimiter=',' )
+    fig = plt.figure()
+    ax = fig.add_subplot(111, aspect='equal')
+    im = Image.open(os.path.join(dirpath, "image")).convert('L')
+
+    ax.set_axis_off()
+    print("here")
+    fig.subplots_adjust(top=1, bottom=0, right=1, left=0,
+                        hspace=0, wspace=0)
+    ax.margins(0, 0)
+    ax.xaxis.set_major_locator(ticker.NullLocator())
+    ax.yaxis.set_major_locator(ticker.NullLocator())
+
+    ax.imshow(im, cmap='gray')
+    recList = list()
+
+    # color = {
+    #     0: "red",
+    #     1: "blue",
+    #     2: "yellow"
+    # }
+
+    # Adding blue rectangle from gt
+    p=patches.Rectangle(
+        (gt_info_cls[1], gt_info_cls[2]),
+        np.abs(gt_info_cls[3] - gt_info_cls[1]),
+        np.abs(gt_info_cls[4] - gt_info_cls[2]),
+        fill=False,
+        edgecolor="blue",
+        linewidth=2
+        )
+    recList.append(p)
+
+    # Adding red rectangle from pred
+    p=patches.Rectangle(
+        (pred_info_cls[1], pred_info_cls[2]),
+        np.abs(pred_info_cls[3] - pred_info_cls[1]),
+        np.abs(pred_info_cls[4] - pred_info_cls[2]),
+        fill=False,
+        edgecolor="red",
+        linewidth=2
+        )
+    recList.append(p)
+
+
+    # plot the graph
+    for recp in recList:
+        ax.add_patch(recp)
+
+    plt.plot()
+    # plt.show()
+    tmpName = "whole_Line" + str(pred_info_cls[0])+"-"+str(gt_info_cls[0])+".png"
+
+    fig.savefig(os.path.join(dirpath, tmpName), dpi=dpi, bbox_inches='tight', pad_inches=0)
+    return tmpName
+
 
 def plotloc(loc_list, dirPath):
     # truth = np.loadtxt(filename, delimiter=',' )
@@ -81,7 +157,7 @@ def plotloc(loc_list, dirPath):
     ax = fig.add_subplot(111, aspect='equal')
     im = np.array(Image.open(os.path.join(dirPath, "image")), dtype=np.uint8)
     ax.set_axis_off()
-    print("here")
+    print("There")
     fig.subplots_adjust(top=1, bottom=0, right=1, left=0,
                         hspace=0, wspace=0)
     ax.margins(0, 0)
@@ -121,8 +197,6 @@ def plotloc(loc_list, dirPath):
 
 
 def plotcls(cls_list, dirPath):
-
-
     # truth = np.loadtxt(filename, delimiter=',' )
     fig = plt.figure()
     ax = fig.add_subplot(111, aspect='equal')
