@@ -1,39 +1,81 @@
 import numpy as np
 import os.path
 from PIL import Image
+
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as ticker
 
-matplotlib.use('Agg')
+
 
 dpi = 150
 
 def cropImg(info_loc, dirpath):
-
-
     # truth = np.loadtxt(filename, delimiter=',' )
     fig = plt.figure()
     ax = fig.add_subplot(111, aspect='equal')
-    if len(info_loc) == 2:
-        im = Image.open(os.path.join(dirpath, "loc.png")).convert('L')
+    im = Image.open(os.path.join(dirpath, 'image')).convert('L')
 
-    else:
-        im = Image.open(os.path.join(dirpath, "cls.png")).convert('L')
-
-
-    x1 = info_loc[0][1]
-    y1 = info_loc[0][2]
-    x2 = info_loc[0][3]
-    y2 = info_loc[0][4]
+    sz = im.size
+    lossBound = 10
+    x1 = max(info_loc[0][1] - lossBound, 0)
+    y1 = max(info_loc[0][2] - lossBound, 0)
+    x2 = min(info_loc[0][3] + lossBound, sz[0]-1)
+    y2 = min(info_loc[0][4] + lossBound, sz[1]-1)
+    print((x1, y1, x2, y2))
     im = im.crop((x1, y1, x2, y2))
-    im.save(os.path.join(dirpath, 'crop.png'))
+    print(info_loc[1])
+    tmpName = "crop_Line"+str(info_loc[1])+".png"
+    im.save(os.path.join(dirpath, tmpName))
+    return tmpName
+
+def wholeImg(info_loc, dirpath):
+    # truth = np.loadtxt(filename, delimiter=',' )
+    fig = plt.figure()
+    ax = fig.add_subplot(111, aspect='equal')
+    im = Image.open(os.path.join(dirpath, "image")).convert('L')
+
+    ax.set_axis_off()
+    print("here")
+    fig.subplots_adjust(top=1, bottom=0, right=1, left=0,
+                        hspace=0, wspace=0)
+    ax.margins(0, 0)
+    ax.xaxis.set_major_locator(ticker.NullLocator())
+    ax.yaxis.set_major_locator(ticker.NullLocator())
+
+    ax.imshow(im, cmap='gray')
+    recList = list()
+
+    color = {
+        0: "red",
+        1: "blue",
+        2: "yellow"
+    }
+    # Adding blue rectangle from predict
+
+    p=patches.Rectangle(
+        (info_loc[0][1], info_loc[0][2]),
+        np.abs(info_loc[0][3] - info_loc[0][1]),
+        np.abs(info_loc[0][4] - info_loc[0][2]),
+        fill=False,
+        edgecolor=color.get(info_loc[0][0]),
+        linewidth=2
+        )
+
+    # plot the graph
+    ax.add_patch(p)
+
+    plt.plot()
+    # plt.show()
+    tmpName = "whole_Line" + str(info_loc[1])+".png"
+
+    fig.savefig(os.path.join(dirpath, tmpName), dpi=dpi, bbox_inches='tight', pad_inches=0)
+    return tmpName
 
 
 def plotloc(loc_list, dirPath):
-
-
     # truth = np.loadtxt(filename, delimiter=',' )
     fig = plt.figure()
     ax = fig.add_subplot(111, aspect='equal')

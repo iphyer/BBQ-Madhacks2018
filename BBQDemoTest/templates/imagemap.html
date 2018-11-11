@@ -32,11 +32,11 @@
     <img src="{{url_for('static', filename=post.path[9:] + 'cls.png')}}" alt="1" usemap="#errormap2">
 
     <map name="errormap2">
-        <!--{% for row in post.loc_error %}-->
-        <!--<h3>{{row[0][1:]}}</h3>-->
-        <!--<area shape="rect" coords="{{row[0][1] * post.scale}},{{row[0][2] * post.scale}},{{row[0][3] * post.scale}},{{row[0][4] * post.scale}}"-->
-              <!--href="zoomin?x1={{row[0][1]}}&y1={{row[0][2]}}&x2={{row[0][3]}}&y2={{row[0][1]}}&path={{post.path}}&scale={{post.scale}}">-->
-        <!--{% endfor %}-->
+        {% for row in post.cls_error %}
+        <h3>{{row[0][1:]}}</h3>
+        <area shape="rect" coords="{{row[0][1] * post.scale}},{{row[0][2] * post.scale}},{{row[0][3] * post.scale}},{{row[0][4] * post.scale}}"
+              href="zoomin?x1={{row[0][1]}}&y1={{row[0][2]}}&x2={{row[0][3]}}&y2={{row[0][1]}}&path={{post.path}}&scale={{post.scale}}">
+        {% endfor %}
     </map>
     {% endif %}
 

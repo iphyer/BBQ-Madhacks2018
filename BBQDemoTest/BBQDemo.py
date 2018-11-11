@@ -1,4 +1,4 @@
-from flask_bootstrap import Bootstrap
+#from flask_bootstrap import Bootstrap
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import os
@@ -10,7 +10,7 @@ from PIL import Image
 import ast
 
 app = Flask(__name__)
-bootstrap = Bootstrap(app)
+#bootstrap = Bootstrap(app)
 
 UPLOAD_FOLDER = './static/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -47,11 +47,14 @@ def zoomin():
     # print(y2)
 
     print("AAAAAAAAAAAAAAAAAA")
-    plotHelper.cropImg(info_list, path)
+    cropName = plotHelper.cropImg(info_list, path)
+    wholeName = plotHelper.wholeImg(info_list, path)
     post = {
         'info_list' : info_list,
         'path' : path,
-        'scale' : scale
+        'scale' : scale,
+        'crop' : cropName,
+        'whole' : wholeName
     }
 
 

@@ -12,7 +12,15 @@
     <p>Prediction Label:{{post.info_list[0][0]}}</p>
     <p>Bounding Box(x1,y1,x2,y2):{{post.info_list[0][1:]}}</p>
     <p>Line #{{post.info_list[1]}} in prediction file.</p>
-    <!--<img src="{{url_for('static', filename=post.path[9:] + 'crop.png')}}" alt="1">-->
+    <div>
+        <p>Local zoom picture</p>
+    <img src="{{url_for('static', filename=post.path[9:] + post.crop )}}" alt="1">
+    </div>
+
+    <div>
+        <p>Whole scale picture</p>
+         <img src="{{url_for('static', filename=post.path[9:] + post.whole )}}" alt="1">
+    </div>
 
     {% else %}
     <h3>Classification Error</h3>>
