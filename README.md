@@ -90,9 +90,16 @@ This means that the object detection model predicts the wrong location of an obj
 ## How we built it
 
 ## Challenges we ran into
+We don't have much experience in web development. First we find it difficult to use css to customize our web page. Then we run into some trouble when trying to make the image map interactive.
 
 ## Accomplishments that we're proud of
+We build a tool that is very easy to use and can make the complicated debugging process much easier.
 
 ## What we learned
+Mostly web development, including html, css, javascript, flask(python), etc.
+As we mentioned, both team members don't know how to do web develop before.
+This project gave us some experience in both front-end and back-end.
 
 ## What's next for BBQ
+BBQ act as a online tool for object detection debugging.
+For future work, we plan to add a model deployment module to BBQ, where users can upload their model to the web service and the other users can use them to detect image online.
