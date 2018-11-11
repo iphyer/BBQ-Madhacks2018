@@ -50,6 +50,8 @@ Things become worse when you have to prepare labels for domain science dataset i
 ![ground truth labeling and predicting image](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/hard.png)
 
 ## What it does
+![workflow image](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/workflow.png)
+
 
 So we plan to create a web service that can developer debug their object detection models especially when the ground truth labeling contains error. 
 
