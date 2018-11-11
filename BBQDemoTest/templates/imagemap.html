@@ -3,28 +3,45 @@
 {% block content%}
 
 <div class="container">
-
     {% for post in posts %}
-        <h3>Location Error</h3>
+    <h3>Overview</h3>
+    <p>precision: {{post.p}}</p>
+    <p>recall: {{post.r}}</p>
+    <p>f1 score: {{post.f1}}</p>
 
-    <h3>{{post.path}}</h3>
-    <img src="{{url_for('static', filename=post.path[9:] + 'out.png')}}" alt="1" usemap="#errormap">
+    {% if post.loc_error|length != 0 %}
+    <h3>Location Error</h3>
 
-    <map name="errormap">
+    <p>{{post.path}}</p>
+    <img src="{{url_for('static', filename=post.path[9:] + 'loc.png')}}" alt="1" usemap="#errormap1">
+
+    <map name="errormap1">
         {% for row in post.loc_error %}
-        <h3>{{row[0][1:]}}</h3>
         <area shape="rect" coords="{{row[0][1] * post.scale}},{{row[0][2] * post.scale}},{{row[0][3] * post.scale}},{{row[0][4] * post.scale}}"
-              href="zoomin?x1={{row[0][1]}}&y1={{row[0][2]}}&x2={{row[0][3]}}&y2={{row[0][1]}}&path={{post.path}}&scale={{post.scale}}">
+              href="zoomin?info={{row}}&path={{post.path}}&scale={{post.scale}}">
         {% endfor %}
     </map>
 
-    <!--<map name="planetmap">-->
-        <!--<area shape="rect" coords="0,0,500,500" href="google.com">-->
-    <!--</map>-->
+    {% endif %}
 
-    <h3>precision: {{post.p}}</h3>
-    <h3>recall: {{post.r}}</h3>
-    <h3>f1 score: {{post.f1}}</h3>
+
+    {% if post.cls_error|length != 0 %}
+    <h3>Classification Error</h3>
+
+    <h3>{{post.path}}</h3>
+    <img src="{{url_for('static', filename=post.path[9:] + 'cls.png')}}" alt="1" usemap="#errormap2">
+
+    <map name="errormap2">
+        <!--{% for row in post.loc_error %}-->
+        <!--<h3>{{row[0][1:]}}</h3>-->
+        <!--<area shape="rect" coords="{{row[0][1] * post.scale}},{{row[0][2] * post.scale}},{{row[0][3] * post.scale}},{{row[0][4] * post.scale}}"-->
+              <!--href="zoomin?x1={{row[0][1]}}&y1={{row[0][2]}}&x2={{row[0][3]}}&y2={{row[0][1]}}&path={{post.path}}&scale={{post.scale}}">-->
+        <!--{% endfor %}-->
+    </map>
+    {% endif %}
+
+
+
     {% endfor %}
 </div>
 
