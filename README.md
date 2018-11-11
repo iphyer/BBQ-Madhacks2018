@@ -39,3 +39,38 @@ you can try
 flask run
 ```
 
+# Submission Summary
+
+## Inspiration
+
+In the object detection task using bounding boxes, people want to know both the location and category of object. So typically two types of error involved here. However, although there are many annotation tools, there are few tools that can help people track where their object detection algorithm fails. Is it because of the poor performance of location regressor or it is due to the failure of the classifier. 
+
+Things become worse when you have to prepare labels for domain science dataset instead of using high-quality dataset like MS COCO or ImageNet. For example, we are working on an  AI project that uses object detection program for STEM() images of metallic material. We want to study the number of different kinds of defects which are important for the performance of the material. However, Faster R-CNN algorithm achieves poor performance and it is very hard to understand why and identify the bugs never to say improve the performance. A typical pair of ground truth image and the predicted image is shown below.
+
+![ground truth labeling and predicting image](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/hard.png)
+
+## What it does
+
+So we plan to create a web service that can developer debug their object detection models especially when the ground truth labeling contains error. 
+
+First, the user inputs the image for detection and the 
+
+
+
+ It will show all the mismatched predicted bounding boxes and for different types of error, it will display them differently:
+
+### 1.  location error
+
+This means that the object detection model predicts the wrong location of an object. The model thinks there is an object but according to ground truth label, it is background. So we have to check why the model thinks a background area is an object. And because the ground truth dataset may contain error, so it can also be that ground truth labeling misses a potential object. 
+
+![typical output of a]
+
+## How we built it
+
+## Challenges we ran into
+
+## Accomplishments that we're proud of
+
+## What we learned
+
+## What's next for BBQ
