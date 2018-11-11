@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content%}
+
+<div class="container">
+    {% for post in posts %}
+    <h3>Overview</h3>
+
+    <ul style="list-style-type:circle">
+        <li> <strong>Precision</strong>: {{post.p}}</li>
+        <li> <strong>Recall</strong>: {{post.r}}</li>
+        <li> <strong>F1 score</strong>: {{post.f1}}</li>
+    </ul>
+
+    {% if post.loc_error|length != 0 %}
+    <h3>Location Error</h3>
+
+    <!--<p>{{post.path}}</p>-->
+    <img src="{{url_for('static', filename=post.path[9:] + 'loc.png')}}" alt="1" usemap="#errormap1">
+
+    <map name="errormap1">
+        {% for row in post.loc_error %}
+        <area shape="rect" coords="{{row[0][1] * post.scaleLOC}},{{row[0][2] * post.scaleLOC}},{{row[0][3] * post.scaleLOC}},{{row[0][4] * post.scaleLOC}}"
+              href="zoomin?info={{row}}&path={{post.path}}&scale={{post.scaleLOC}}">
+        {% endfor %}
+    </map>
+
+    {% endif %}
+
+    <br>
+    {% if post.cls_error|length != 0 %}
+    <h3>Classification Error</h3>
+
+    <!--<h3>{{post.path}}</h3>-->
+    <img src="{{url_for('static', filename=post.path[9:] + 'cls.png')}}" alt="2" usemap="#errormap2">
+
+    <map name="errormap2">
+        {% for row in post.cls_error %}
+        <!--<h3>{{row[0]}}</h3>-->
+        <!--<h3>{{row[1]}}</h3>-->
+        <!--<h3>{{row[2][1:]}}</h3>-->
+        <!--<h3>{{row[3]}}</h3>-->
+        <area shape="rect" coords="{{row[0][1] * post.scaleCLS}},{{row[0][2] * post.scaleCLS}},{{row[0][3] * post.scaleCLS}},{{row[0][4] * post.scaleCLS}}"
+              href="zoominCLS?predinfo={{row[0]}}&predline={{row[1]}}&gtinfo={{row[2]}}&gtline={{row[3]}}&path={{post.path}}&scale={{post.scaleCLS}}">
+        {% endfor %}
+    </map>
+    {% endif %}
+
+
+
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}

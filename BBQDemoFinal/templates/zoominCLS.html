@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content%}
+
+<div class="container">
+
+    {% for post in posts %}
+
+    <h3>Classification Error</h3>
+    <div>
+    <h4>Prediction Information</h4>
+    <ul style="list-style-type:circle">
+        <li><strong>Prediction Label</strong>:{{post.predinfo_list[0]}}</li>
+        <li><strong>Bounding Box(x1,y1,x2,y2)</strong>:{{post.predinfo_list[1:]}}</li>
+        <li>Line <strong>#{{post.predline}}</strong> in prediction file.</li>
+    </ul>
+    <div>
+        <p>Local zoom picture</p>
+    <img src="{{url_for('static', filename=post.path[9:] + post.cropPred )}}" alt="1">
+    </div></div>
+
+    <div>
+    <h4>Ground Truth Information</h4>
+    <ul style="list-style-type:circle">
+
+        <li><strong>Ground Truth Label</strong>:{{post.gtinfo_list[0]}}</li>
+        <li><strong>Ground Truth Bounding Box(x1,y1,x2,y2)</strong>:{{post.gtinfo_list[1:]}}</li>
+        <li>Line <strong>#{{post.gtline}}</strong> in Ground Truth file.</li>
+    </ul>
+    <div>
+        <p>Local zoom picture</p>
+    <img src="{{url_for('static', filename=post.path[9:] + post.cropGt )}}" alt="1">
+    </div></div>
+
+
+    <div>
+        <h4>Whole scale picture</h4>
+         <img src="{{url_for('static', filename=post.path[9:] + post.whole )}}" alt="1">
+    </div>
+
+
+
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}
