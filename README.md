@@ -114,9 +114,11 @@ You can click either red for prediction bounding box or blue ground truth boundi
 
 Then the website will bring you to the more detailed information page as shown below,
 
- ![step5cls](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step5cls.jpg)
+ ![step5cls](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step5cls.png)
 
 ## How we built it
+
+
 
 ## Challenges we ran into
 We don't have much experience in web development. First we find it difficult to use css to customize our web page. Then we run into some trouble when trying to make the image map interactive.
