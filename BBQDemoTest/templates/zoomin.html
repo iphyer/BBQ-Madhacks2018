@@ -8,10 +8,14 @@
     <!--<p>Path: {{post.path}}</p>-->
 
     {% if post.info_list|length == 2 %}
+
     <h3>Location Error</h3>
-    <p>Prediction Label:{{post.info_list[0][0]}}</p>
-    <p>Bounding Box(x1,y1,x2,y2):{{post.info_list[0][1:]}}</p>
-    <p>Line #{{post.info_list[1]}} in prediction file.</p>
+
+    <ul style="list-style-type:circle">
+        <li><strong>Prediction Label</strong>:{{post.info_list[0][0]}}</li>
+        <li><strong>Bounding Box(x1,y1,x2,y2)</strong>>:{{post.info_list[0][1:]}}</li>
+        <li>Line <strong>#{{post.info_list[1]}}</strong> in prediction file.</li>
+    </ul>
     <div>
         <h4>Local zoom picture</h4>
     <img src="{{url_for('static', filename=post.path[9:] + post.crop )}}" alt="1">

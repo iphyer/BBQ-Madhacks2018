@@ -158,9 +158,9 @@ def processing(files, dirPath):
     scale_cls = 1.0 * w2_cls / w1
     print(len(cls_error_list))
     post = {
-        'p' : precision,
-        'r' : recall,
-        'f1' : F1,
+        'p' : float("{0:.2f}".format(precision)),
+        'r' : float("{0:.2f}".format(recall)),
+        'f1' : float("{0:.2f}".format(F1)),
         'loc_error' : loc_error_list,
         'cls_error' : cls_error_list,
         'path' : dirPath,

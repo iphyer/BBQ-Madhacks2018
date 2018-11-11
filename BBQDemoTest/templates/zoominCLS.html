@@ -6,13 +6,14 @@
 
     {% for post in posts %}
 
-    <!--<p>Path: {{post.path}}</p>-->
     <h3>Classification Error</h3>
     <div>
     <h4>Prediction Information</h4>
-    <p>Prediction Label:{{post.predinfo_list[0]}}</p>
-    <p>Prediction Bounding Box(x1,y1,x2,y2):{{post.predinfo_list[1:]}}</p>
-    <p>Line #{{post.predline}} in Prediction file.</p>
+    <ul style="list-style-type:circle">
+        <li><strong>Prediction Label</strong>:{{post.info_list[0][0]}}</li>
+        <li><strong>Bounding Box(x1,y1,x2,y2)</strong>:{{post.info_list[0][1:]}}</li>
+        <li>Line <strong>#{{post.info_list[1]}}</strong> in prediction file.</li>
+    </ul>
     <div>
         <p>Local zoom picture</p>
     <img src="{{url_for('static', filename=post.path[9:] + post.cropPred )}}" alt="1">
@@ -20,9 +21,12 @@
 
     <div>
     <h4>Ground Truth Information</h4>
-    <p>Ground Truth Label:{{post.gtinfo_list[0]}}</p>
-    <p>Ground Truth Bounding Box(x1,y1,x2,y2):{{post.gtinfo_list[1:]}}</p>
-    <p>Line #{{post.gtline}} in Ground Truth file.</p>
+    <ul style="list-style-type:circle">
+
+        <li><strong>Ground Truth Label</strong>:{{post.gtinfo_list[0]}}</li>
+        <li><strong>Ground Truth Bounding Box(x1,y1,x2,y2)</strong>:{{post.gtinfo_list[1:]}}</li>
+        <li>Line <strong>#{{post.gtline}}</strong> in Ground Truth file.</li>
+    </ul>
     <div>
         <p>Local zoom picture</p>
     <img src="{{url_for('static', filename=post.path[9:] + post.cropGt )}}" alt="1">

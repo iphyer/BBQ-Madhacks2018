@@ -5,9 +5,12 @@
 <div class="container">
     {% for post in posts %}
     <h3>Overview</h3>
-    <p>precision: {{post.p}}</p>
-    <p>recall: {{post.r}}</p>
-    <p>f1 score: {{post.f1}}</p>
+
+    <ul style="list-style-type:circle">
+        <li> <strong>Precision</strong>: {{post.p}}</li>
+        <li> <strong>Recall</strong>: {{post.r}}</li>
+        <li> <strong>F1 score</strong>: {{post.f1}}</li>
+    </ul>
 
     {% if post.loc_error|length != 0 %}
     <h3>Location Error</h3>
@@ -24,7 +27,7 @@
 
     {% endif %}
 
-<br>
+    <br>
     {% if post.cls_error|length != 0 %}
     <h3>Classification Error</h3>
 
