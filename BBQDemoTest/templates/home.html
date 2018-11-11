@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content%}
+
+<div class="container">
+    <h2>How does it work?</h2>
+    <p>11111111111</p>
+
+
+    <form action = "http://localhost:5000/uploader" method = "POST"
+    enctype = "multipart/form-data">
+    Image:<input type = "file" name = "file" />
+    GT:<input type = "file" name = "file" />
+    Pred:<input type = "file" name = "file" />
+    <input type = "submit"/>
+
+    <!--<input type = "submit"/>-->
+    <!--</form>-->
+    <!--<button type="button" class="btn btn-success btn-lg" id="image-mapper-upload">Select Image from My PC</button>-->
+    <!--<input type="file" name="" id="image-mapper-file">-->
+    <!--<form action = "http://localhost:5000/uploader" method = "POST"-->
+          <!--enctype = "multipart/form-data">-->
+
+    <!--<label class="btn btn-primary" for="my-file-selector">-->
+        <!--<input id="my-file-selector" type="file" style="display:none"-->
+               <!--onchange="$('#upload-file-info').html(this.files[0].name)">-->
+        <!--Upload Image-->
+    <!--</label>-->
+    <!--<span class='label label-info' id="upload-file-info"></span>-->
+
+    <!--<input type = "submit"/>-->
+    <!--</form>-->
+
+    <h2>What is BBQ?</h2>
+    <p>11111111111</p>
+    <h2>About</h2>
+    <p>11111111111</p>
+</div>
+
+
+
+{% endblock %}
