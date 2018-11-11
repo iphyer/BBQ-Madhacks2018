@@ -29,7 +29,7 @@ Then you will this hints below
 
 ```bash
  * Serving Flask app "BBQDemo"
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Running on http://127.0.0.1:5000/  
 
 ```
 
@@ -53,11 +53,33 @@ Things become worse when you have to prepare labels for domain science dataset i
 
 So we plan to create a web service that can developer debug their object detection models especially when the ground truth labeling contains error. 
 
-First, the user inputs the image for detection and the 
+### Step by step usage
 
+#### Step 1 : upload files
 
+the user inputs the image for detection and the ground truth bounding box txt file and the prediction bounding box txt file. The bounding box should follow the following format
 
- It will show all the mismatched predicted bounding boxes and for different types of error, it will display them differently:
+```python
+
+[label, x1, y1, x2, y2]
+
+``` 
+
+Where label is the label of object contained in the bounding box and `(x1,y1)` is the top left conner of the bounding box and `(x2,y2)` is the right bottom conner of the bounding box.
+
+Check the following figure for more information
+
+![step1](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step1.jpg)
+
+![step2](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step2.jpg)
+
+After all files are selected, you can click the `Submit` to submit all 3 files
+
+![step3](https://github.com/iphyer/BBQ_Madhacks2018/blob/master/Report/IMG/step3.png)
+
+#### Step 2 : check overall results
+
+Then the website will show all the mismatched predicted bounding boxes and for different types of error, it will display them differently:
 
 ### 1.  location error
 
