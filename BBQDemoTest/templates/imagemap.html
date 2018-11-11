@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content%}
+
+<div class="container">
+    <h3>Image Map</h3>
+    {% for post in posts %}
+    <h3>{{post.path}}</h3>
+    <img src="{{url_for('static', filename=post.path[9:] + 'out.png')}}" alt="1" usemap="#planetmap">
+
+    <!--<map name="planetmap">-->
+        <!--{% for row in post.loc_error %}-->
+        <!--<h3>{{row[0]}}</h3>-->
+        <!--<area shape="rect" coords="{{row[0][1]}},{{row[0][2]}},{{row[0][3]}},{{row[0][4]}}" href="google.com">-->
+        <!--{% endfor %}-->
+    <!--</map>-->
+
+    <map name="planetmap">
+        <area shape="rect" coords="0,0,500,500" href="google.com">
+    </map>
+
+    <h3>precision: {{post.p}}</h3>
+    <h3>recall: {{post.r}}</h3>
+    <h3>f1 score: {{post.f1}}</h3>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}
